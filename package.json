@@ -1,0 +1,21 @@
+{
+  "name": "stringbuilder",
+  "version": "0.0.0",
+  "description": "An StringBuilder for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/delmosaurio/stringbuilder.git"
+  },
+  "keywords": [
+    "string",
+    "build"
+  ],
+  "author": "Delmo Carrozzo <dcardev@gmail.com>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "2de2b4e533332cfcea5991b9d69a446f1b78132a"
+}
