@@ -11,7 +11,7 @@ describe('Making `Lorem ipsum` with StringBuilder', function() {
 
 	before(function(done){
 		sb
-		  .append('Lorem {0} sit amet,', 'ipsum dolor')
+		  .append('Lorem {0} sit {1},', 'ipsum dolor', 'amet')
 		  .append(' consectetur {0} elit,', 'adipisicing')
 		  .append(' sed do {0} dolore magna aliqua.', 'eiusmod tempor incididunt ut labore et')
 		  .append(' Ut {0} veniam,', 'enim ad minim')
