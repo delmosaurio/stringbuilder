@@ -1,4 +1,4 @@
-# StringBuilder - under development 
+# StringBuilder [![Build Status](https://secure.travis-ci.org/delmosaurio/stringbuilder.png)](http://travis-ci.org/delmosaurio/stringbuilder) - under development 
 
 An string builder for [Node.js](http://nodejs.org/)
 
