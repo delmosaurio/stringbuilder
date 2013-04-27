@@ -5,7 +5,7 @@ An string builder for [Node.js](http://nodejs.org/)
 ### npm install
 
 ```
-npm install scriptme
+npm install stringbuilder
 ```
 
 ## license 
