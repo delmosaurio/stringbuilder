@@ -1,6 +1,6 @@
 {
   "name": "stringbuilder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An StringBuilder for Node.js",
   "main": "index.js",
   "scripts": {
@@ -17,5 +17,9 @@
   "author": "Delmo Carrozzo <dcardev@gmail.com>",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "gitHead": "2de2b4e533332cfcea5991b9d69a446f1b78132a"
+  "gitHead": "2de2b4e533332cfcea5991b9d69a446f1b78132a",
+  "dependencies": {
+    "xregexp": "~2.0.0",
+    "async": "~0.2.7"
+  }
 }
