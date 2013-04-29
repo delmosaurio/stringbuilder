@@ -45,19 +45,33 @@ output
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 ```
 
-### promise
+### formats
+
+To apply formats please see [moment](http://momentjs.com/) and [numeral](http://numeraljs.com/)
 
 ```js
 var sb = new StringBuilder();
 
-sb.append('now: {0:mm/dd/yyyy}', new Date());
+sb.append('{0:format}');
 
 ```
 
-output
+dates examples
 
+```js
+sb.append('{0:L}', new date());      // 04/29/2013
+sb.append('{0:LL}', new date());     // April 29 2013
+sb.append('{0:LLL}', new date());    // April 29 2013 9:13 AM
+sb.append('{0:LLLL}', new date());   // Monday, April 29 2013 9:13 AM
 ```
-now: 04/27/2013
+
+numbers examples
+
+```js
+sb.append('{0:$0,0.00}', 1000.234);   // $0,000.23
+sb.append('{0:0%}', 1);               // 100%
+sb.append('{0:0b}', 100);             // 100B
+sb.append('{0:(0,0.0000)}', -10000);  // (10,000.0000)
 ```
 
 ## license 
