@@ -10,7 +10,7 @@ npm install stringbuilder
 
 ### Usage
 
-```
+```js
 var StringBuilder = require('stringbuilder')
 
 // create an StringBuilder();
@@ -30,7 +30,7 @@ sbInside.append('another text');
 
 extends the String 
 
-```
+```js
 var StringBuilder = require('stringbuilder')
 
 StringBuilder.extend('string');
