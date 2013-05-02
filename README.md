@@ -1,4 +1,4 @@
-# StringBuilder [![Build Status](https://secure.travis-ci.org/delmosaurio/stringbuilder.png)](http://travis-ci.org/delmosaurio/stringbuilder) - under development 
+# StringBuilder [![Build Status](https://secure.travis-ci.org/delmosaurio/stringbuilder.png)](http://travis-ci.org/delmosaurio/stringbuilder)
 
 An string builder for [Node.js](http://nodejs.org/)
 
@@ -8,42 +8,110 @@ An string builder for [Node.js](http://nodejs.org/)
 npm install stringbuilder
 ```
 
-## usage
+### Usage
+
+```
+var StringBuilder = require('stringbuilder')
+
+// create an StringBuilder();
+var sb = new StringBuilder( {newline:'\r\n'} );
+var sbInside = new StringBuilder( {newline:'\r\n'} );
+
+sb.append('some text') // append text
+sb.append('{0:YYYY}', new Date()) // append text formatted
+sb.appendLine('some text') // append a new line
+sb.appendLine('{0:$ 0.1}', 50.1044) // append a new line formatted
+ab.append( sbInside );  // append other sbInside into sb
+                        // you can append text into `sbInside` after that                        
+
+sbInside.append('another text');
+
+```
+
+extends the String 
+
+```
+var StringBuilder = require('stringbuilder')
+
+StringBuilder.extend('string');
+
+'The current year is {0:YYYY}'.format(new Date(2013)); // The current year is 2013
+or the same
+String.format('The current year is {0:YYYY}', new Date(2013)); // The current year is 2013
+```
+
+### example
 
 ```js
-var StringBuilder = require('stringbuilder');
+var StringBuilder = require('stringbuilder')
+  , fs = require('fs');
 
-var sb1 = new StringBuilder();
-var sb2 = new StringBuilder();
+// Make an markdown file of the beatles
+var data = {
+    band: "The Beatles"
+  , formed: new Date(1960)
+  , discography: [
+      { name: 'Sentimental Journey', created: new Date(1970), price: (Math.random()*10)+1 }
+    , { name: 'Beaucoups of Blues', created: new Date(1970), price: (Math.random()*10)+1 }
+    , { name: 'Ringo', created: new Date(1973), price: (Math.random()*10)+1 }
+    , { name: 'Goodnight Vienna', created: new Date(1974), price: (Math.random()*10)+1 }
+    , { name: 'Ringo\'s Rotogravure', created: new Date(1976), price: (Math.random()*10)+1 }
+    , { name: 'Ringo the 4th', created: new Date(1977), price: (Math.random()*10)+1 }
+  ]
+};
 
-sb1
-  .append(' consectetur {0} elit,', 'adipISIcing')
-  .append(sb2)
-  .insert('Lorem ipsum dolor sit amet,', 0)
-  .replace('adipISIcing', 'adipisicing');
+var main = new StringBuilder()
+  , discography = new StringBuilder();
 
-sb2
-  .append(' sed do {0} dolore magna aliqua.', 'eiusmod tempor incididunt ut labore et')
-  .append(' Ut {0} veniam,', 'enim ad minim')
-  .append(' quis {0} laboris', 'nostrud exercitation ullamco')
-  .append(' nisi {0} ex ea commodo consequat.', 'ut aliquip')
-  .append(' Duis {0} reprehenderit in voluptate', 'aute irure dolor in')
-  .append(' velit esse cillum dolore eu fugiat nulla pariatur.')
-  .append(' Excepteur sint occaecat cupidatat non proident,')
-  .append(' sunt in culpa qui officia deserunt')
-  .append(' mollit anim id est laborum.');
+// extend de String object
+StringBuilder.extend('string');
 
-sb1.build(function(err, result){
-	console.log(result);	
+var filename = './{0}.md'.format(data.band);
+
+var stream = fs.createWriteStream( filename );
+
+main
+  .appendLine('## {0}', data.band)
+  .appendLine()
+  .append('{0} were an English rock band formed in Liverpool in {1:YYYY}.', data.band, data.formed)
+  .append('They became the most commercially successful and critically ')
+  .append('acclaimed act in the rock music era. The group\'s best-known ')
+  .appendLine('lineup consisted of John Lennon, Paul McCartney, George Harrison, and Ringo Starr.')
+  .replace(/(John|Paul|George|Ringo)\s(Lennon|McCartney|Harrison|Starr)/g, '[$1 $2](http://en.wikipedia.org/wiki/$1_$2)')
+  .appendLine()
+  .appendLine('### Discography')
+  .appendLine()
+  .append(discography); // add an StringBuilder
+
+// append into the discography
+data.discography.forEach(function(disk){
+  discography.appendLine(' - {0} in {1:YYYY}   *{2:$ 0,0.00 } release price*', disk.name, disk.created, disk.price);
 });
 
+// then write into a file
+main.writeStream(stream, function(err, resutls){
+  console.log( String.format('The file `{0}` was created!', filename) );
+  stream.end();
+});
 ```
 
 output
 
-```
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-```
+## The Beatles
+
+The Beatles were an English rock band formed in Liverpool in 1969.They became the most commercially successful and critically acclaimed act in the rock music era. The group's best-known lineup consisted of [John Lennon](http://en.wikipedia.org/wiki/John_Lennon), [Paul McCartney](http://en.wikipedia.org/wiki/Paul_McCartney), [George Harrison](http://en.wikipedia.org/wiki/George_Harrison), and [Ringo Starr](http://en.wikipedia.org/wiki/Ringo_Starr).
+
+### Discography
+
+ - Sentimental Journey in 1969   *$ 4.678 release price*
+ - Beaucoups of Blues in 1969   *$ 8.430 release price*
+ - Ringo in 1969   *$ 6.816 release price*
+ - Goodnight Vienna in 1969   *$ 7.842 release price*
+ - Ringo's Rotogravure in 1969   *$ 8.055 release price*
+ - Ringo the 4th in 1969   *$ 3.751 release price*
+
+
+----------------------------------------
 
 ### formats
 
@@ -72,6 +140,32 @@ sb.append('{0:$0,0.00}', 1000.234);   // $0,000.23
 sb.append('{0:0%}', 1);               // 100%
 sb.append('{0:0b}', 100);             // 100B
 sb.append('{0:(0,0.0000)}', -10000);  // (10,000.0000)
+```
+
+## more information
+
+### build trough
+
+Please see [async](https://github.com/caolan/async)
+
+This is the way that the StringBuilder build the strings.
+
+```
+waterfall
+  |-parallel
+    |-sb.append(format, ...args)
+    |-sb.append(string)
+    |-sb.appendLine(format, ...args)
+    |-sb.appendLine(string)
+  |-sb.insert(...)
+  |-sb.replace(...)
+  |-parallel
+    |-sb.append(format, ...args)
+    |-sb.append(StringBuilder())
+    |-sb.appendLine(string)
+  |-sb.insert(...)
+  |-parallel
+    |-sb.append(format, ...args)
 ```
 
 ## license 
