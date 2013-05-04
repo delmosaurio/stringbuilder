@@ -1,6 +1,6 @@
 {
   "name": "stringbuilder",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "An StringBuilder for Node.js",
   "main": "index.js",
   "scripts": {
