@@ -14,7 +14,7 @@
     "url": "https://github.com/delmosaurio/stringbuilder/issues"
   },
   "keywords": [
-    "string", "build", "make string", "append string", "format", "string format"
+    "string builder", "string", "builder", "make string", "append string", "format", "string format"
   ],
   "author": "Delmo Carrozzo <dcardev@gmail.com>",
   "license": "MIT",
