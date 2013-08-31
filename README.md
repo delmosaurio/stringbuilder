@@ -88,11 +88,11 @@ data.discography.forEach(function(disk){
   discography.appendLine(' - {0} in {1:YYYY}   *{2:$ 0,0.00 } release price*', disk.name, disk.created, disk.price);
 });
 
-// then write into a file
-main.writeStream(stream, function(err, resutls){
-  console.log( String.format('The file `{0}` was created!', filename) );
-  stream.end();
-});
+var filename = './{0}.md'.format(data.band);
+var stream = fs.createWriteStream( filename, 'utf-8' );
+
+main.pipe(stream);
+main.flush();
 ```
 
 output
