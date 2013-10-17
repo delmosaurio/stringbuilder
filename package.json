@@ -1,6 +1,6 @@
 {
   "name": "stringbuilder",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "An String Builder for Node.js",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "keywords": [
     "string builder", "string", "builder", "regex", "format", "string format"
   ],
-  "author": "Delmo Carrozzo <dcardev@gmail.com>",
+  "author": "Delmo Carrozzo <delmosaurio@gmail.com>",
   "license": "MIT",
   "readmeFilename": "README.md",
   "gitHead": "2de2b4e533332cfcea5991b9d69a446f1b78132a",

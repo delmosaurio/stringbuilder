@@ -16,12 +16,16 @@ var StringBuilder = require('stringbuilder')
 // create an StringBuilder();
 var sb = new StringBuilder( {newline:'\r\n'} );
 var sbInside = new StringBuilder( {newline:'\r\n'} );
+  
+// you can configure all new intances of the StringBuilder
+// as default win32='\r\n' others='\n'
+// StringBuilder.configure({newline:'\r\n'});
 
 sb.append('some text') // append text
 sb.append('{0:YYYY}', new Date()) // append text formatted
 sb.appendLine('some text') // append a new line
 sb.appendLine('{0:$ 0.1}', 50.1044) // append a new line formatted
-ab.append( sbInside );  // append other sbInside into sb
+ab.append( sbInside );  // append other StringBuilder into sb
                         // you can append text into `sbInside` after that                        
 
 sbInside.append('another text');
@@ -71,19 +75,29 @@ var filename = './{0}.md'.format(data.band);
 var stream = fs.createWriteStream( filename );
 
 main
-  .appendLine('## {0}', data.band)
+  .appendLine('{0}', data.band)
   .appendLine()
   .append('{0} were an English rock band formed in Liverpool in {1:YYYY}.', data.band, data.formed)
   .append('They became the most commercially successful and critically ')
   .append('acclaimed act in the rock music era. The group\'s best-known ')
   .appendLine('lineup consisted of John Lennon, Paul McCartney, George Harrison, and Ringo Starr.')
-  .replace(/(John|Paul|George|Ringo)\s(Lennon|McCartney|Harrison|Starr)/g, '[$1 $2](http://en.wikipedia.org/wiki/$1_$2)')
+  .replace(/(John|Paul|George|Ringo)\s(Lennon|McCartney|Harrison|Starr)/g, '[$1 $2](http://en.wikipedia.org/wiki/$1_$2)') // replace
   .appendLine()
   .appendLine('### Discography')
   .appendLine()
-  .append(discography); // add an StringBuilder
+  .append(discography) // add an another StringBuilder
+  .appendLine()
+  .appendLine('### Influences')  // then write more text
+  .appendLine()
+  .appendLine('Their earliest influences include Elvis Presley, Carl Perkins, Little Richard and Chuck Berry ...');
+  .appendLine()
+  .appendLine('### Genres')  
+  .appendLine()
+  .appendLine('Originating as a skiffle group, the Beatles quickly embraced 1950s rock and roll, and their repertoire ultimately expanded to include a broad variety of pop music ...')
+  .insert('## ', 0) // Insert text
+  ; 
 
-// append into the discography
+// append into the discography stringbuilder
 data.discography.forEach(function(disk){
   discography.appendLine(' - {0} in {1:YYYY}   *{2:$ 0,0.00 } release price*', disk.name, disk.created, disk.price);
 });
@@ -99,16 +113,24 @@ output
 
 ## The Beatles
 
-The Beatles were an English rock band formed in Liverpool in 1969.They became the most commercially successful and critically acclaimed act in the rock music era. The group's best-known lineup consisted of [John Lennon](http://en.wikipedia.org/wiki/John_Lennon), [Paul McCartney](http://en.wikipedia.org/wiki/Paul_McCartney), [George Harrison](http://en.wikipedia.org/wiki/George_Harrison), and [Ringo Starr](http://en.wikipedia.org/wiki/Ringo_Starr).
+The Beatles were an English rock band formed in Liverpool in 1969They became the most commercially successful and critically acclaimed act in the rock music era. The group's best-known lineup consisted of [John Lennon](http://en.wikipedia.org/wiki/John_Lennon), [Paul McCartney](http://en.wikipedia.org/wiki/Paul_McCartney), [George Harrison](http://en.wikipedia.org/wiki/George_Harrison), and [Ringo Starr](http://en.wikipedia.org/wiki/Ringo_Starr).
 
 ### Discography
 
- - Sentimental Journey in 1969   *$ 4.678 release price*
- - Beaucoups of Blues in 1969   *$ 8.430 release price*
- - Ringo in 1969   *$ 6.816 release price*
- - Goodnight Vienna in 1969   *$ 7.842 release price*
- - Ringo's Rotogravure in 1969   *$ 8.055 release price*
- - Ringo the 4th in 1969   *$ 3.751 release price*
+ - Sentimental Journey in 1969   *$ 3.474 release price*
+ - Beaucoups of Blues in 1969   *$ 10.012 release price*
+ - Ringo in 1969   *$ 3.375 release price*
+ - Goodnight Vienna in 1969   *$ 2.687 release price*
+ - Ringo's Rotogravure in 1969   *$ 7.972 release price*
+ - Ringo the 4th in 1969   *$ 3.421 release price*
+
+### Influences
+
+Their earliest influences include Elvis Presley, Carl Perkins, Little Richard and Chuck Berry ...
+
+### Genres
+
+Originating as a skiffle group, the Beatles quickly embraced 1950s rock and roll, and their repertoire ultimately expanded to include a broad variety of pop music ...
 
 
 ----------------------------------------
@@ -148,7 +170,7 @@ sb.append('{0:(0,0.0000)}', -10000);  // (10,000.0000)
 
 Please see [async](https://github.com/caolan/async)
 
-This is the way that the StringBuilder build the strings.
+This is the way that the StringBuilder makes the output string.
 
 ```
 waterfall
