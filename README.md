@@ -74,6 +74,8 @@ var filename = './{0}.md'.format(data.band);
 
 var stream = fs.createWriteStream( filename );
 
+var namesRegex = /(John|Paul|George|Ringo)\s(Lennon|McCartney|Harrison|Starr)/g
+
 main
   .appendLine('{0}', data.band)
   .appendLine()
@@ -81,21 +83,24 @@ main
   .append('They became the most commercially successful and critically ')
   .append('acclaimed act in the rock music era. The group\'s best-known ')
   .appendLine('lineup consisted of John Lennon, Paul McCartney, George Harrison, and Ringo Starr.')
-  .replace(/(John|Paul|George|Ringo)\s(Lennon|McCartney|Harrison|Starr)/g, '[$1 $2](http://en.wikipedia.org/wiki/$1_$2)') // replace
+  .replace(namesRegex, '[$1 $2](http://en.wikipedia.org/wiki/$1_$2)') // replace
   .appendLine()
   .appendLine('### Discography')
   .appendLine()
-  .append(discography) // add an another StringBuilder
+  .append(discography) // append an StringBuilder
   .appendLine()
   .appendLine('### Influences')  // then write more text
   .appendLine()
-  .appendLine('Their earliest influences include Elvis Presley, Carl Perkins, Little Richard and Chuck Berry ...');
+  .append('Their earliest influences include ')
+  .appendLine('Elvis Presley, Carl Perkins, Little Richard and Chuck Berry ...')
   .appendLine()
   .appendLine('### Genres')  
-  .appendLine()
-  .appendLine('Originating as a skiffle group, the Beatles quickly embraced 1950s rock and roll, and their repertoire ultimately expanded to include a broad variety of pop music ...')
+  .appendLine('')
+  .append('Originating as a skiffle group, the Beatles quickly embraced 1950s ')
+  .append('rock and roll, and their repertoire ultimately expanded to include')
+  .appendLine('a broad variety of pop music ...')
   .insert('## ', 0) // Insert text
-  ; 
+  ;
 
 // append into the discography stringbuilder
 data.discography.forEach(function(disk){
@@ -133,6 +138,72 @@ Their earliest influences include Elvis Presley, Carl Perkins, Little Richard an
 Originating as a skiffle group, the Beatles quickly embraced 1950s rock and roll, and their repertoire ultimately expanded to include a broad variety of pop music ...
 
 
+----------------------------------------
+
+### build html
+
+NOTE: The idea of this example is show you how create parts of one output string separately and then combine all of them, if you need makes html can use an template engine like [handlebars](http://handlebarsjs.com/), this is only an example
+
+```js
+var html = new StringBuilder()
+  , head = new StringBuilder({ newline: '\r\n\t' }) // add a tab at the end
+  , body = new StringBuilder({ newline: '\r\n\t' }) // add a tab at the end
+  ;
+
+var initTag, endTag, tag, attr;
+
+initTag = '<{0}>';
+endTag = '</{0}>';
+tag = '{0}{{1}}{1}'.format(initTag, endTag);
+attr = '{0}="{1}"';
+
+
+// make the body
+body.append('\t')
+  .appendLine(tag.format('h1', 'StringBuilder example'))
+  .append(tag.format('p', 'esta es una forma de crear html with stringbuilder'));
+
+// make the head
+head.append('\t')
+  .appendLine('<meta {0}>', attr.format('charset', 'UTF-8'))
+  .appendLine('<meta {0} {1}>', attr.format('http-equiv', 'X-UA-Compatible'), attr.format('content', 'IE=edge'))
+  .append(tag.format('title', 'Generate html with StringBuilder'));
+
+// make the html
+html.appendLine('<!doctype html>')
+  .appendLine('<html {0}>', attr.format('lang', 'en'))
+
+  // head
+  .appendLine(initTag.format('head'))
+  .append(head)
+  .appendLine()
+  .appendLine(endTag.format('head'))
+
+  // body
+  .appendLine(initTag.format('body'))
+  .append(body)
+  .appendLine()
+  .appendLine(endTag.format('body'))
+
+  .append(endTag.format('html'));
+```
+
+output
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Generate html with StringBuilder</title>
+</head>
+<body>
+  <h1>StringBuilder example</h1>
+  <p>esta es una forma de crear html with stringbuilder</p>
+</body>
+</html>
+```
 ----------------------------------------
 
 ### formats
