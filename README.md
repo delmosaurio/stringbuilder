@@ -142,7 +142,7 @@ Originating as a skiffle group, the Beatles quickly embraced 1950s rock and roll
 
 ### build html
 
-NOTE: The idea of this example is show you how create parts of one output string separately and then combine all of them, if you need makes html can use an template engine like [handlebars](http://handlebarsjs.com/), this is only an example
+NOTE: The idea of this example is show you how create parts of one output string separately and then combine all of them, if you need makes html can use a template engine like [handlebars](http://handlebarsjs.com/), this is only an example
 
 ```js
 var html = new StringBuilder()
@@ -150,18 +150,18 @@ var html = new StringBuilder()
   , body = new StringBuilder({ newline: '\r\n\t' }) // add a tab at the end
   ;
 
-var initTag, endTag, tag, attr;
+var initTag, endTag, tag, attr, lorem;
 
 initTag = '<{0}>';
 endTag = '</{0}>';
 tag = '{0}{{1}}{1}'.format(initTag, endTag);
 attr = '{0}="{1}"';
-
+lorem = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
 
 // make the body
 body.append('\t')
   .appendLine(tag.format('h1', 'StringBuilder example'))
-  .append(tag.format('p', 'esta es una forma de crear html with stringbuilder'));
+  .append(tag.format('p', lorem));
 
 // make the head
 head.append('\t')
@@ -200,7 +200,7 @@ output
 </head>
 <body>
   <h1>StringBuilder example</h1>
-  <p>esta es una forma de crear html with stringbuilder</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 </body>
 </html>
 ```
