@@ -25,7 +25,7 @@ sb.append('some text') // append text
 sb.append('{0:YYYY}', new Date()) // append text formatted
 sb.appendLine('some text') // append a new line
 sb.appendLine('{0:$ 0.1}', 50.1044) // append a new line formatted
-ab.append( sbInside );  // append other StringBuilder into sb
+sb.append( sbInside );  // append other StringBuilder into sb
                         // you can append text into `sbInside` after that                        
 
 sbInside.append('another text');
